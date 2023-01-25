@@ -16,9 +16,10 @@ def post_reader():
         # extração dos dados do json
         user_id = data['user_id']
         book_id = data['book_id']
+        current_page = data['current_page']
 
         # instanciar a classe Db_functions e inserir o usuário
-        response = user_book_db_functions.reader_insert(book_id=book_id, user_id=user_id)
+        response = user_book_db_functions.reader_insert(book_id=book_id, user_id=user_id, current_page=current_page)
         return response
     else:
         abort(404)

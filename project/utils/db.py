@@ -101,16 +101,22 @@ class Book_db_functions:
                 }
             return response_json
 
+# todo quando tiver front-end vamos ter que dar uma query no nome do livro para obter o id
 class User_book_db_functions:
-    def reader_insert(self, book_id, user_id):
+    def reader_insert(self, book_id, user_id, current_page):
         with app.app_context():
             user = User.query.get(user_id)
             book = Book.query.get(book_id)
 
+            total_pages = book.pages_qty
+
             if user is None or book is None:
                 return jsonify({'erro': 'user or book not found'})
 
-            user_book = UserBook(user_id=user_id, book_id=book_id)
+            if int(current_page) > int(total_pages):
+                return jsonify({'erro': 'Pagina atual não pode ser maior que o total de paginas do livro em questao'})
+
+            user_book = UserBook(user_id=user_id, book_id=book_id, current_page=current_page)
             try:
                 database.session.add(user_book)
                 database.session.commit()

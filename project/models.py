@@ -35,6 +35,7 @@ class UserBook(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     user_id = database.Column(database.Integer, database.ForeignKey('users.id'))
     book_id = database.Column(database.Integer, database.ForeignKey('books.id'))
+    current_page = database.Column(database.Integer, nullable=False)
 
 
 # To create our databases tables
